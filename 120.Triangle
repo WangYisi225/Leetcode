@@ -1,0 +1,15 @@
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        #自底向上动态规划
+        #边界条件
+        if len(triangle) == 0:
+            return 0
+        elif len(triangle) == 1:
+            return triangle[0][0]
+        #动态规划
+        else:
+            for i in range(len(triangle)-2,-1,-1):    #自底向上倒叙
+                for j in range(len(triangle[i])):
+                    triangle[i][j] += min(triangle[i+1][j],triangle[i+1][j+1])
+                    
+            return triangle[0][0]
