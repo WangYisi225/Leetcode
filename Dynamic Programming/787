@@ -1,0 +1,42 @@
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        #自底向上的动态规划
+
+        #生成DP二维矩阵,纵轴为城市，横轴为K最大可中转数，表内为在该城市_时最大中转数为_时的最小代价
+        dp = [[99999 for i in range(K+1)] for j in range(n)]
+
+        res = 99999
+
+        #初始化
+        for d in range(K+1):
+            dp[dst][d] = 0     #从目的地出发到目的地不需要搭航班，为0
+
+
+        for city in range(n):
+            for k in flights:
+                if k[0] == city and k[1] == dst:
+                    dp[city][0] = k[2]     #能一次直达目的地的城市航班票价，没有直达城市置-1
+
+        #开始动态规划
+        for k1 in range(1,K+1):
+            for n_city in range(n-1):
+                if dp[n_city][k1-1] != 99999 and n_city != src:
+                    #定位到前一步有直达终点的城市(n_city)
+
+                    for m in range(n-1):
+                        for k2 in flights:
+                            if k2[0]==m and k2[1]==n_city:
+                                dp[m][k1] = min(dp[m][k1],k2[2]+dp[n_city][k1-1])
+
+            for check in range(n-1):
+                if dp[check][k1] > dp[check][k1-1]:
+                    dp[check][k1] =  dp[check][k1-1]
+
+        #求取答案
+        for an in dp[src]:
+            res = min(res,an)
+
+        if res == 99999:
+            return -1
+
+        return res
