@@ -1,3 +1,6 @@
+#测试用例通过33/41，数据量大的时候超时
+#基础的自底向上动态规划
+
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
         #自底向上的动态规划
@@ -19,18 +22,18 @@ class Solution:
 
         #开始动态规划
         for k1 in range(1,K+1):
-            for n_city in range(n-1):
-                if dp[n_city][k1-1] != 99999 and n_city != src:
+            for n_city in range(n):
+                if dp[n_city][k1-1] != 99999 and n_city != src and n_city != dst:
                     #定位到前一步有直达终点的城市(n_city)
 
-                    for m in range(n-1):
+                    for m in range(n):
                         for k2 in flights:
                             if k2[0]==m and k2[1]==n_city:
                                 dp[m][k1] = min(dp[m][k1],k2[2]+dp[n_city][k1-1])
 
-            for check in range(n-1):
-                if dp[check][k1] > dp[check][k1-1]:
-                    dp[check][k1] =  dp[check][k1-1]
+                    for check in range(n):
+                        if dp[check][k1] > dp[check][k1-1]:
+                            dp[check][k1] =  dp[check][k1-1]
 
         #求取答案
         for an in dp[src]:
