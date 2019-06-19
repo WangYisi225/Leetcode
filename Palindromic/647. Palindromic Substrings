@@ -1,0 +1,19 @@
+#遍历每一个字符，以字符为中点进行左右生长
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        num = 0
+        
+        def count(st,start,end):
+            n = 0
+            while(start>=0 and end<len(st) and (st[start] == st[end])):
+                n += 1
+                start -=1
+                end +=1
+            return n
+        
+        for i in range(len(s)):
+            num += count(s,i,i)   #回文串长度为奇数
+            num += count(s,i,i+1)    #回文串长度为偶数
+        
+        return num
