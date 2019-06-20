@@ -1,0 +1,42 @@
+#二叉树的层次遍历，使用一个辅助队列输出二叉树的每一层，判断每一层是不是回文
+#####################################################################
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if root == None:
+            return True
+        elif root != None:
+            queue = [root]
+            while(queue):
+                nextqueue = []
+                layer = []
+                for i in queue:
+                    if i.left != None:
+                        l = i.left
+                        layer.append(l.val)
+                        nextqueue.append(i.left)
+                    else:
+                        layer.append("Null")
+                        
+                    if i.right != None:
+                        r = i.right
+                        layer.append(r.val)
+                        nextqueue.append(i.right)
+                    else:
+                        layer.append("Null")
+                queue = nextqueue
+                if int(len(layer)%2) != 0:
+                    return False
+                else:
+                    for j in range(int(len(layer)/2)):
+                        if layer[j] == layer[len(layer)-j-1]:
+                            continue
+                        else:
+                            return False
+            return True
