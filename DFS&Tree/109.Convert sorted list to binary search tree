@@ -1,0 +1,37 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        #边界条件
+        if head == None:
+            return None
+        elif head != None and head.next == None:
+            return TreeNode(head.val)
+        
+        pre = head
+        p = pre.next
+        q = p.next
+        
+        while(q!=None and q.next!=None):
+            pre = pre.next
+            p = pre.next
+            #快慢指针法，pre,p每次移动一个单位，q每次移动两个单位，那么当q到达尾端时，p正好到中间（类似于二分法）
+            q = q.next.next
+            
+        pre.next = None
+        root = TreeNode(p.val)
+        root.left = self.sortedListToBST(head)
+        root.right = self.sortedListToBST(p.next)
+        
+        return root
