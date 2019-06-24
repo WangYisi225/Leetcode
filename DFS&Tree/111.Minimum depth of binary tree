@@ -1,0 +1,30 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if root != None:
+            num = 0
+            root_list = [root]
+            while(root_list != []):
+                next_layer = []
+                num += 1
+                for i in root_list:
+                    if i.left == None and i.right == None:
+                        return num
+                        break
+                    elif i.left != None and i.right == None:
+                        next_layer.append(i.left)
+                    elif i.left == None and i.right != None:
+                        next_layer.append(i.right)
+                    else:
+                        next_layer.append(i.left)
+                        next_layer.append(i.right)
+                root_list = next_layer
+        else:
+            return 0
+                
