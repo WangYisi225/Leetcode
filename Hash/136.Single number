@@ -1,0 +1,9 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        #异或同一个数两次，原数不变
+        #0异或任何数等于该数本身
+        
+        a = 0
+        for num in nums:
+            a = a ^ num
+        return a 
