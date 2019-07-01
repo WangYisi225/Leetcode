@@ -6,7 +6,7 @@ class Solution:
         res = []
         #i为从哪开始递归的索引，temp_sum为当前暂时的和，temp为当前的数字组合list
         def backtrack(i,temp_sum,temp):
-            #如果目前的和已经超了（失败了），或者已经便利到最后了，那回溯
+            #如果目前的和已经超了（失败了），或者已经遍历到最后了，那回溯
             if temp_sum > target or i == n:
                 return 
             #如果此时已经成功了
