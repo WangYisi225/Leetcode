@@ -1,0 +1,15 @@
+#比46题多了一个去重
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res = []
+        def backtrack(nums,temp):
+            if nums == [] and temp not in res:
+                res.append(temp)
+                return
+            else:
+                for i in range(len(nums)):
+                    backtrack(nums[:i]+nums[i+1:],temp+[nums[i]])
+        backtrack(nums,[])
+        return res
