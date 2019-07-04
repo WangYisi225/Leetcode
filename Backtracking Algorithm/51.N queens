@@ -1,0 +1,47 @@
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        #结果返回list
+        res = []
+        #初始化棋盘，全用"."来表示
+        grid = [["." for i in range(n)]for j in range(n)] 
+        #判断此时棋盘局势时候符合局势函数,输入为二维list,时间复杂度O^2
+        def grid_is_ok(grid):
+            #判断每行中没有相同的棋子
+            for i in range(len(grid)):
+                count = 0
+                for j in grid[i]:
+                    if j == "Q":
+                        count += 1
+                if count > 1:
+                    return False
+            #判断每列中没有相同的棋子
+            for k in range(len(grid)):
+                conl = []
+                count = 0
+                for l in range(len(grid)):
+                    conl.append(grid[j][k])
+                for m in conl:
+                    if m == "Q":
+                        count += 1
+                if count > 1:
+                    return False
+            #判断斜列有没有冲突
+            
+            
+            
+        #回溯函数
+        def backtrack(cur_l,cur_grid):
+            #终止条件，已经回溯到n列（行）后，意味着棋盘已经形成，保存一种结果
+            if cur_l == n:
+                res.append(cur_grid)
+                return
+            else:
+                for i in range(n - cur_l):
+                    cur_grid[cur_l][i] = "Q"
+                    if grid_is_ok(cur_grid) == True:
+                        backtrack(cur_l + 1,cur_grid)
+        
+        
+        #主函数
+        backtrack(0,grid)
+        return res
