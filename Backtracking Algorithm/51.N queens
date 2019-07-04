@@ -19,14 +19,74 @@ class Solution:
                 conl = []
                 count = 0
                 for l in range(len(grid)):
-                    conl.append(grid[j][k])
+                    conl.append(grid[l][k])
                 for m in conl:
                     if m == "Q":
                         count += 1
                 if count > 1:
                     return False
-            #判断斜列有没有冲突
+            #判断斜列（左上到右下）没有冲突
+            for n in range(1,len(grid)-1):
+                temp = []
+                for o in range(len(grid)-n):
+                    temp.append(grid[o][n+o])
+                count = 0
+                for p in temp:
+                    if p == "Q":
+                        count += 1
+                if count > 1:
+                    return False
+            for n1 in range(1,len(grid)-1):
+                temp = []
+                for o1 in range(len(grid)-n):
+                    temp.append(grid[n1+o1][o1])
+                count = 0
+                for p1 in temp:
+                    if p1 == "Q":
+                        count += 1
+                if count > 1:
+                    return False
+            temp2 = []
+            for n2 in range(len(grid)):
+                temp2.append(grid[n2][n2])
+            count1 = 0
+            for n22 in temp2:
+                if n22 == "Q":
+                    count1 += 1
+            if count1 > 1:
+                return False
             
+            #判断斜列（左下到右上）没有冲突
+            for n3 in range(1,len(grid)-1):
+                temp = []
+                for o2 in range(n3+1):
+                    temp.append(grid[n3-o2][o2])
+                count = 0
+                for p2 in temp:
+                    if p2 == "Q":
+                        count += 1
+                if count > 1:
+                    return False
+            for n4 in range(1,len(grid)-1):
+                temp = []
+                for o3 in range(len(grid)-n4):
+                    temp.append(grid[len(grid)-1-o3][n4+o3])
+                count = 0
+                for p3 in temp:
+                    if p3 == "Q":
+                        count += 1
+                if count > 1:
+                    return False
+            temp3 = []
+            for n5 in range(len(grid)):
+                temp3.append(grid[n5][len(grid)-n5-1])
+            count2 = 0
+            for n55 in temp3:
+                if n55 == "Q":
+                    count2 += 1
+            if count2 > 1:
+                return False
+            return True
             
             
         #回溯函数
