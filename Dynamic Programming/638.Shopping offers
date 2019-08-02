@@ -1,0 +1,40 @@
+#未完
+
+class Solution:
+    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
+        #先求出可以使用的大礼包是哪些
+        def which_bag(needs_):
+            special_erase = []
+            for bag in range(len(special)):
+                for ele in range(len(needs_)):
+                    if special[bag][ele] > needs_[ele]:
+                        special_erase.append(special[bag])
+                        break
+            special_use = []
+            for spele in special:
+                if spele not in special_erase:
+                    special_use.append(spele)
+            return special_erase
+        
+        #比较此时可用的礼包中性价比的方案（类似于最小公倍数）
+        def cheapest_bag(special_):
+            LCM = []
+            special_value = []
+            for i in range(len(needs)):
+                temp = []
+                for j in special_:
+                    temp.append(j[i])
+                LCM.append(max(temp))
+            for k in range(len(special_)):
+                count = special_[k][-1]
+                for j in range(len(needs)):
+                    if special_[k][j]<LCM[j]:
+                        count += (price[j]*LCM[j]-special_[k][j])
+                special_value.append(count)
+            count_min = min(LCM)
+            for ele in LCM:
+                if ele == count_min:
+                    return LCM.index(ele)
+        #每一次选择一个性价比最高的大礼包，更新剩余的needs
+        def needs_is_true(need):
+            for i in need:
